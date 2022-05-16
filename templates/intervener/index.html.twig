@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }}
+    - Intervenants
+{% endblock %}
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-11 shadow-lg p-3 mb-5 h-100 layout-description">
+            <div class="row">
+                {% for intervener in interveners %}
+                    <div class="col-sm-4 col-md-3">
+                        <div>
+                            <div class="card-body">
+                                <h5 class="card-title text-center text-primary">{{intervener.displayName}}</h5>
+                                <p class="card-text text-center">
+                                    {% if intervener.picture %}
+                                        <img class="rounded-circle" src="{{asset(pictures_directory ~ intervener.picture.url)}}" width="200wv" height="200wv"/>
+                                    {% else %}
+                                        <img class="rounded-circle" src="https://www.rekilibre.fr/images/Silhouettefemmau.jpg" width="200wv" height="200wv"/>
+                                    {% endif %}
+                                </p>
+                                <div class="row justify-content-center">
+                                    <a class="btn btn-primary" href="{{path('detail_intervener',{'id':intervener.id})}}">Plus d'informations</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

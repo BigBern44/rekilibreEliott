@@ -1,0 +1,36 @@
+{{form_start(registrationForm)}}
+<div class="row">
+    <div class="col-6">
+        {{form_row(registrationForm.lastname)}}
+    </div>
+    <div class="col-6">
+        {{form_row(registrationForm.firstname)}}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        {{form_row(registrationForm.birthdate)}}
+    </div>
+    <div class="col-6">
+        {{form_row(registrationForm.gender)}}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        {{form_row(registrationForm.postAddress)}}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        {{form_row(registrationForm.zipCode)}}
+    </div>
+    <div class="col-6">
+        {{form_row(registrationForm.city)}}
+    </div>
+</div>
+
+{% include 'registration/components/navigation.html.twig' %}
+{{form_end(registrationForm)}}

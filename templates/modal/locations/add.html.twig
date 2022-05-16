@@ -1,0 +1,31 @@
+<div aria-hidden="true" aria-labelledby="modalFormLocationLabel" class="modal fade" id="modalFormLocation" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            {{ form_start(formLocation) }}
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFormIntervenerLabel">Ajouter une salle</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formLocation.name) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formLocation.address) }}
+                    </div>
+                </div>
+                {{ form_row(formLocation.picture) }}
+            </div>
+
+            <div class="modal-footer">
+                {{ form_widget(formLocation.Valider,{'attr':{'class':'btn btn-success'}}) }}
+                <button class="btn btn-danger" data-dismiss="modal" type="button">Fermer</button>
+            </div>
+
+            {{ form_end(formLocation) }}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+{% set isIntervener = false %}
+{% set isParticipant = false %}
+<div class="col-md-6">
+    <h3>Informations:</h3>
+    <p>
+        {% if activity.fromDateTime == activity.toDateTime %}
+            le
+            {{activity.fromDateTime | date("d/m/Y")}}
+        {% else %}
+            du
+            {{activity.fromDateTime | date("d/m/Y")}}
+            au
+            {{activity.toDateTime | date("d/m/Y")}}
+        {% endif %}
+    </p>
+    <p>de
+        {{activity.fromTime | date("H:i")}}
+        à
+        {{activity.toTime | date("H:i")}}</p>
+    <h3>Prix:</h3>
+    <p>{{activity.price}}€</p>
+    <h3>Salle:</h3>
+    {% if activity.location is not null %}
+        <p>{{activity.location.name}}</p>
+        <p>{{activity.location.address}}</p>
+        <img src="{{asset(pictures_directory ~ activity.location.picture.url)}}" width="20%"/>
+    {% else %}
+        <p>Aucune salle renseignée</p>
+    {% endif %}
+</div>
+{% for user in activity.users %}
+	{% if app.user %}
+		{% if user.id == app.user.id %}
+			{% set isParticipant =true %}
+		{% endif %}
+	{% endif %}		
+{% endfor %}
+{% for intervener in activity.interveners %}
+	{% if app.user %}
+		{% if intervener.id == app.user.id %}
+			{% set isIntervener =true %}
+		{% endif %}
+	{% endif %}		
+{% endfor %}
+<div class="col-md-6">
+    <h3>Adhérents inscrits:
+        {{activity.users|length}}/{{activity.maxRegistrations}}</h3>
+    {% for i in 0..activity.maxRegistrations - 1 %}
+        {% if i+1 <= activity.users|length %}
+            {% if (isParticipant or isIntervener) or is_granted('ROLE_ADMIN') %}
+                <a href="#" data-toggle="tooltip" data-placement="top" title="{{activity.users[i].firstname ~' '~ activity.users[i].surname}}">
+                    <i class="fas fa-user text-success"></i>
+                </a>
+            {% else %}
+                <a href="#" data-toggle="tooltip" data-placement="top" title="Anonyme">
+                    <i class="fas fa-user text-primary"></i>
+                </a>
+            {% endif %}
+		{% else %}
+			<i class="fas fa-user text-secondary"></i>
+		{% endif %}
+    {% endfor %}
+    <h3>Intervenants:</h3>
+    {% for intervener in activity.interveners %}
+        <a href="#" data-toggle="tooltip" data-placement="top" title="{{intervener.firstname}} {{intervener.surname}}">
+            <i class="fas fa-user text-primary"></i>
+        </a>
+    {% endfor %}
+    {% if isIntervener or is_granted('ROLE_ADMIN') %}
+		<h3>Informations inscrits:</h3>
+		{% for user in activity.users %}
+			<p>{{user.displayNameContact}}</p>
+		{% endfor %}
+	{% endif %}
+</div>
+<div class="col-12 mb-2">
+    <h3>Description:</h3>
+
+    <div id="layout-description">
+        <div>{{activity.description | raw}}</div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <button class="btn btn-primary mt-2" id="btn-edit" tag="">Modifier</button>
+        {% endif %}
+    </div>
+
+    <div id="layout-summmernote" style="display:none">
+        {{ form_start(formDescription) }}
+        {{ form_widget(formDescription.description, {'id': 'summernote'}) }}
+        <div class="mt-2">
+            {{ form_widget(formDescription.valider, {'attr':{'class':'btn-success'}}) }}
+            <button class="btn btn-danger" id="btn-cancel" tag="" type="button">Annuler</button>
+        </div>
+        {{ form_end(formDescription) }}
+    </div>
+</div>
+
+{% if app.user %}
+    {% if app.user not in activity.users %}
+        {% if (not activity.reiki and is_granted('ROLE_ADHERENT')) or (activity.reiki and is_granted('ROLE_REIKI')) %}
+            {% if activity.users|length != activity.maxRegistrations %}
+                <a class="btn btn-success" href="{{path('user_register_activity',{'idActivity':activity.id})}}">Inscription</a>
+            {% else %}
+                <a class="btn btn-secondary" href="#">Nombre maximum atteint, vous pouvez contacter l'intervenant pour lui demander s'il accepte des places supplémentaires</a>
+            {% endif %}
+        {% else %}
+            <a class="btn btn-secondary" href="#">Vous ne pouvez pas vous inscrire (Adhésion en attente)</a>
+        {% endif %}
+    {% else %}
+        <a class="btn btn-danger" href="{{path('user_unregister_activity',{'idActivity':activity.id})}}">Désinscription</a>
+    {% endif %}
+{% else %}
+    <a class="btn btn-secondary" href="{{path('app_login')}}">Vous devez être connecté pour vous inscrire</a>
+{% endif %}

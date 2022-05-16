@@ -1,0 +1,105 @@
+<div class="row mb-2 justify-content-center">
+    <div class="col-3 pl-0">
+        <button class="btn btn-primary btn-block" data-target="#modalFormIntervener" data-toggle="modal" type="button">Ajouter un intervenant</button>
+    </div>
+    <div class="row col-9 navigation text-right pr-0">
+        <form class="col-12" action="{{path('admin_interveners')}}" method="get">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i aria-hidden="true" class="fas fa-search text-l text-secondary"></i>
+                    </div>
+                </div>
+                <input name="search" aria-label="Recherche" class="form-control" placeholder="Recherche par nom" type="text" value="{{search}}"/>
+                <div class="input-group-prepend p-0 m-0">
+                    <button type="submit" class="btn btn-block p-0 m-0">
+                        <div class="input-group-text" class="p-0 m-0">
+                            <i class="fas fa-check text-success text-l m-0 p-0" data-toggle="tooltip" data-placement="left" title="Rechercher"></i>
+                        </div>
+                    </button>
+                    <a href="{{path('admin_interveners')}}">
+                        <div class="input-group-text">
+                            <i class="fas fa-times text-danger text-l" data-toggle="tooltip" data-placement="left" title="Annuler"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-striped table-secondary">
+    <thead class="bg-primary text-white ">
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Civilité</th>
+            <th scope="col">Date naiss.</th>
+            <th scope="col">Email</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Intervenant</th>
+            <th scope="col">Asso./Entr.</th>
+            <th scope="col">Téléphone</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for intervener in interveners %}
+            <tr>
+                <th scope="row">{{intervener.surname}}</th>
+                <td>{{intervener.firstname}}</td>
+                <td>{{intervener.gender}}</td>
+                <td>{{intervener.birthdate|date("d/m/Y")}}</td>
+                <td>{{intervener.email}}</td>
+                <td>{{intervener.status ? 'Adhérent':'Non adhérent'}}</td>
+                <td>{{intervener.intervener ? 'Oui':'Non'}}</td>
+                <td>{{intervener.partner}}</td>
+                <td>{{intervener.phone}}</td>
+                <td>{{intervener.fullAddress}}</td>
+                <td>
+                    <a href="{{path('detail_intervener',{'id':intervener.id})}}">
+                        <i class="fas fa-eye text-primary text-l m-1" data-placement="left" data-toggle="tooltip" title="Détail"></i>
+                    </a>
+                    <a data-target="#modalFormActivities{{intervener.id}}" data-toggle="modal" href="#">
+                        <i class="fas fa-running text-primary text-l m-1" data-placement="left" data-toggle="tooltip" title="Activités"></i>
+                    </a>
+                    <a data-target="#modalFormPayments{{intervener.id}}" data-toggle="modal" href="#">
+                        <i class="fas fa-euro-sign text-primary text-l m-1" data-placement="left" data-toggle="tooltip" title="Paiements"></i>
+                    </a>
+                    <a data-target="#modalFormIntervener{{intervener.id}}" data-toggle="modal" href="#">
+                        <i class="far fa-edit text-primary text-l m-1" data-placement="left" data-toggle="tooltip" title="Modifier"></i>
+                    </a>
+                    <a href="{{path('delete_intervener',{'id':intervener.id,'page':page,'search':search})}}" onclick="return confirm('Confirmer la suppression ?');">
+                        <i class="far fa-minus-square text-danger text-l m-1" data-toggle="tooltip" data-placement="left" title="Supprimer"></i>
+                    </a>
+                    <a data-target="#modalFormPopup{{intervener.id}}" data-toggle="modal" href="#">
+						<i class="far fa-file-pdf text-primary text-l" data-placement="left" data-toggle="tooltip" title="PDF"></i>
+                    </a>
+                    {% include 'modal/users/activities.html.twig' with {'user': intervener, 'activities': intervener.intervenerActivities} %}
+                    {% include 'modal/users/payments.html.twig' with {'user': intervener, 'activities': intervener.intervenerActivities} %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="row mt-2 justify-content-center">
+    <div class="col navigation text-left">
+        {{ knp_pagination_render(interveners) }}
+    </div>
+</div>
+{% include 'modal/interveners/add.html.twig' %}
+
+{% for formModifyIntervener in formModifyInterveners %}
+    {% include 'modal/interveners/modify.html.twig' with {'id': formModifyIntervener.vars.value.id} %}
+{% endfor %}
+
+{% for formListeIntervener in formListeInterveners %}
+{% include 'modal/interveners/popup.html.twig' with {'id': formListeIntervener.vars.value.id} %}
+{% endfor %}
+
+
+
+
+

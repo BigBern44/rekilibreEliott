@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Forum Rékilibre">
+        <meta name="theme-color" content="#ffffff">
+        <title>Rékilibre - Forum</title>
+        <link href="{{ asset('build/app.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('build/forum.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
+
+        <link rel="icon" type="image/png" />
+        {% block stylesheets %}
+            <link href="{{ asset('build/app.css') }}" rel="stylesheet"/>
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('build/forum.js') }}"></script>
+        {% endblock %}
+        <script>
+            function openCreateDiscussion() {
+              document.getElementById("main").style.filter = "blur(2px)";
+              document.getElementById("createDiscussion").style.display = "inline-block";
+            }
+
+            function cancelCreateDiscussion() {
+              document.getElementById("main").style.filter = "blur(0px)";
+              document.getElementById("createDiscussion").style.display = "none";
+            }
+        </script>
+    </head>
+    <body>
+        <header>
+            <div id="nav">
+                <div class="logoNavBar">
+                    <img src="{{ asset('build/images/ico-stone-tower.png') }}">
+                </div>
+
+                <ul>
+                    <li><a href="/forum"> Retour vers Rekilibre ➡</i>  </a> </li>
+                </ul>
+            </div>
+
+        </header>
+        <div id="main">
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            <div class="content">
+                <div id="topic">
+                    <div class="title">
+                            <h1>Discussion : {{discussion.title}}</h1>
+                        </div>
+
+
+                        {% if allPosts is not empty %}
+                            {% for i in 0..allPosts|length-1 %}
+                                {% if allPosts[i] is defined %}
+                                    <div class="topic">
+                                        <div class="deleteDiv">
+                                            {%if (allPosts[i].getAuthor() == userCurrent) or (is_granted('ROLE_ADMIN')) %}
+                                                <a class="delete" href="{{path('delete_post',{'id':allPosts[i].id})}}" onclick='return confirm("Etes vous sur de vouloir supprimer ce post ?")'>❌</a>
+                                            {%endif%}
+                                        </div>
+                                        <div class="logo">
+                                            <img alt="Rékilibre Logo" src="{{ asset('build/images/ico-stone-tower.png') }}">
+                                        </div>
+
+                                        <div class="username">
+                                            <h1><span>{{allPosts[i].getAuthor().getFirstname()}} {{allPosts[i].getAuthor().getSurname()}}</span> - {{allPosts[i].createdAt|date("d/m/Y")}} à {{allPosts[i].createdAt|date("G:i")}}</h1>
+
+                                            <p>{{allPosts[i].content}}</p>
+
+
+
+                                        </div>
+
+                                    </div>
+
+                                    <hr>
+                                {%endif%}
+                            {%endfor%}
+                        {%endif%}
+                        <div class="formAjoutPost">
+
+
+                            {{ form_start(formaddPost) }}
+                            {{ form_widget(formaddPost.content, {'id': 'summernote'}) }}
+
+                            {{ form_widget(formaddPost.Ajouter_un_post) }}
+
+                            {{ form_end(formaddPost) }}
+                        </div>
+                    </div>
+                <?php }
+
+                ?>
+            </div>
+        </div>
+    </body>
+</html>

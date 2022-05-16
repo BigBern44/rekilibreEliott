@@ -1,0 +1,32 @@
+{% if step == thisStepNumber %}
+    <div class="step">
+        <h5>
+            <span class="bs-stepper-circle bg-primary text-l">
+                <i class="{{fontClass}}"></i>
+            </span>
+            <span class="bs-stepper-label text-primary">{{thisStepName}}</span>
+        </h5>
+    </div>
+{% elseif thisStepNumber < step %}
+    <div class="step">
+        <button class="step-trigger" id="information-part-trigger" role="tab" type="button">
+            <a href="{{icoRoute}}">
+                <h5>
+                    <span class="bs-stepper-circle bg-secondary text-l">
+                        <i class="{{fontClass}}"></i>
+                    </span>
+                    <span class="bs-stepper-label text-secondary">{{thisStepName}}</span>
+                </h5>
+            </a>
+        </button>
+    </div>
+{% else %}
+    <div class="step">
+        <h5>
+            <span class="bs-stepper-circle text-l">
+                <i class="{{fontClass}}"></i>
+            </span>
+            <span class="bs-stepper-label">{{thisStepName}}</span>
+        </h5>
+    </div>
+{% endif %}

@@ -1,0 +1,73 @@
+<div aria-hidden="true" aria-labelledby="modalFormHebdoActivityLabel" class="modal fade" id="modalFormHebdoActivity{{id}}" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            {{ form_start(formModifyHebdoActivity) }}
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFormHebdoActivityLabel">Modifier une activité hebdomadaire</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ form_row(formModifyHebdoActivity.name) }}
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.fromDateTime, {'id': 'add_hebdo_activity_fromDateTime' ~ id, 'attr': {'data-target': '#add_hebdo_activity_fromDateTime' ~ id}}) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.toDateTime, {'id': 'add_hebdo_activity_toDateTime' ~ id, 'attr': {'data-target': '#add_hebdo_activity_toDateTime' ~ id}}) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.day) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.fromTime, {'id': 'add_hebdo_activity_fromTime' ~ id, 'attr': {'data-target': '#add_hebdo_activity_fromTime' ~ id}}) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.toTime, {'id': 'add_hebdo_activity_toTime' ~ id, 'attr': {'data-target': '#add_hebdo_activity_toTime' ~ id}}) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.price) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.maxRegistrations) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.location) }}
+                    </div>
+                </div>
+
+                {{ form_row(formModifyHebdoActivity.interveners) }}
+
+                {{ form_row(formModifyHebdoActivity.users) }}
+
+                {{ form_row(formModifyHebdoActivity.picture) }}
+
+                <div class="row ml-1">
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.reiki) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.appNotification) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyHebdoActivity.emailNotification) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                {{ form_widget(formModifyHebdoActivity.Valider,{'attr':{'class':'btn btn-success'}}) }}
+                <button class="btn btn-danger" data-dismiss="modal" type="button">Fermer</button>
+            </div>
+            {{ form_end(formModifyHebdoActivity) }}
+        </div>
+    </div>
+</div>

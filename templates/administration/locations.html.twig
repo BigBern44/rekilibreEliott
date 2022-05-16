@@ -1,0 +1,69 @@
+<div class="row mb-2 justify-content-center">
+    <div class="col-3 pl-0">
+        <button class="btn btn-primary btn-block" data-target="#modalFormLocation" data-toggle="modal" type="button">Ajouter une salle</button>
+    </div>
+    <div class="row col-9 navigation text-right pr-0">
+        <form class="col-12" action="{{path('locations')}}" method="get">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i aria-hidden="true" class="fas fa-search text-l text-secondary"></i>
+                    </div>
+                </div>
+                <input name="search" aria-label="Recherche" class="form-control" placeholder="Recherche par nom" type="text" value="{{search}}"/>
+                <div class="input-group-prepend p-0 m-0">
+                    <button type="submit" class="btn btn-block p-0 m-0">
+                        <div class="input-group-text" class="p-0 m-0">
+                            <i class="fas fa-check text-success text-l m-0 p-0" data-toggle="tooltip" data-placement="left" title="Rechercher"></i>
+                        </div>
+                    </button>
+                    <a href="{{path('locations')}}">
+                        <div class="input-group-text">
+                            <i class="fas fa-times text-danger text-l" data-toggle="tooltip" data-placement="left" title="Annuler"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-striped table-secondary">
+    <thead class="bg-primary text-white ">
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Photo</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for location in locations %}
+            <tr>
+                <th scope="row">{{location.name}}</th>
+                <td>{{location.address}}</td>
+                <td>{% if location.picture %}<img src="{{asset(pictures_directory ~ location.picture.url)}}" style="width:100px;"></img>{% endif %}</td>
+                <td>
+                    <a data-target="#modalFormLocation{{location.id}}" data-toggle="modal" href="#">
+                        <i class="far fa-edit text-primary text-l m-1" data-placement="left" data-toggle="tooltip" title="Modifier"></i>
+                    </a>
+                    <a href="{{path('delete_location',{'id':location.id,'page':page,'search':search})}}" onclick="return confirm('Confirmer la suppression ?');">
+                        <i class="far fa-minus-square text-danger text-l m-1" data-toggle="tooltip" data-placement="left" title="Supprimer"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="row mt-2 justify-content-center">
+    <div class="col navigation text-left">
+        {{ knp_pagination_render(locations) }}
+    </div>
+</div>
+
+{% include 'modal/locations/add.html.twig' %}
+
+{% for formModifyLocation in formModifyLocations %}
+    {% include 'modal/locations/modify.html.twig' with {'id': formModifyLocation.vars.value.id} %}
+{% endfor %}

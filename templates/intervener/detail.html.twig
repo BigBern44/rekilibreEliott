@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }}
+    - Intervenants
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/detailActivity.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-11 shadow-lg p-3 mb-5 h-100 layout-description">
+            <div class="row">
+                <div class="col-12">
+                    {% if intervener.picture %}
+                        <img src="{{asset(pictures_directory ~ intervener.picture.url)}}" width="200wv">
+                    {% else %}
+                        <img src="https://www.rekilibre.fr/images/Silhouettefemmau.jpg" width="200wv">
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    <h1>{{intervener.firstname}}
+                        {{intervener.surname}}</h1>
+                    <p>Téléphone :
+                        {{intervener.phone}}</p>
+                    <p>Adresse email :
+                        {{intervener.email}}</p>
+                </div>
+                <div class="col-12 mb-2">
+                    <h3>Description:</h3>
+
+                    <div id="layout-description">
+                        <div>{{intervener.description | raw}}</div>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <button class="btn btn-primary mt-2" id="btn-edit" tag="">Modifier</button>
+                        {% endif %}
+                    </div>
+
+                    <div id="layout-summmernote" style="display:none">
+                        {{ form_start(formDescription) }}
+                        {{ form_widget(formDescription.description, {'id': 'summernote'}) }}
+                        <div class="mt-2">
+                            {{ form_widget(formDescription.valider, {'attr':{'class':'btn-success'}}) }}
+                            <button class="btn btn-danger" id="btn-cancel" tag="" type="button">Annuler</button>
+                        </div>
+                        {{ form_end(formDescription) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/detailActivity.js') }}"></script>
+{% endblock %}

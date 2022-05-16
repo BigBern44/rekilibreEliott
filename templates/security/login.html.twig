@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }}
+    - Connexion
+{% endblock %}
+
+{% block body %}
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <div class="row justify-content-center">
+            <div class="col-md-5 mt-4 mx-4 p-2 shadow-lg p-3 h-100 layout-description d-flex flex-column">
+
+                <h1 class="h3 mb-3 font-weight-normal">Adhérent</h1>
+                <p>J'entre dans l'espace adhérent: je m'identifie.</p>
+                <div class="form-group">
+                    <label class="sr-only" for="inputEmail">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label class="sr-only" for="inputPassword">Mot de passe</label>
+                    <input class="form-control" id="inputPassword" name="password" placeholder="Password" required type="password">
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input name="_remember_me" type="checkbox">
+                        Se souvenir
+                    </label>
+                </div>
+
+                <p>
+                    Vous n'avez pas de mot de passe ou vous l'avez oublié? <a data-target="#modalFormReset" data-toggle="modal" href="#">Cliquez ici</a>
+                    <br><br>
+                    <b>Vous recevrez par mail à l'adresse que vous avez fourni un lien qui vous permettra de créer un nouveau mot de passe.</b>
+                </p>
+
+                <div class="row justify-content-center mt-auto">
+                    <button class="btn btn-lg btn-success mx-4 text-white" type="submit">
+                        Connexion
+                    </button>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-5 mt-4 mx-4 p-2 shadow-lg p-3 layout-description d-flex flex-column">
+                <h1 class="h3 mb-3 font-weight-normal">Non adhérent</h1>
+
+                <p>Je veux faire une demande d'inscription.</p>
+
+                <p>
+                    En créant votre profil sur Rekilibre vous aurez le privilège de disposer de toutes les informations de l'association et de réserver votre place pour les inscriptions aux activités.
+                </p>
+
+                <p>
+                    Nous vous contacterons pour effectuer la démarche d'adhésion.
+                </p>
+
+                <div class="row justify-content-center mt-auto">
+                    <a href="{{(path('app_register'))}}" class="btn btn-lg btn-primary mx-4">
+                        Inscription
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% include 'modal/security/reset_password.html.twig' %}
+{% endblock %}

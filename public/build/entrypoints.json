@@ -1,0 +1,46 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "build/runtime.js",
+        "build/app.js"
+      ],
+      "css": [
+        "build/app.css"
+      ]
+    },
+    "home": {
+      "js": [
+        "build/runtime.js",
+        "build/home.js"
+      ],
+      "css": [
+        "build/home.css"
+      ]
+    },
+    "news": {
+      "js": [
+        "build/runtime.js",
+        "build/news.js"
+      ],
+      "css": [
+        "build/news.css"
+      ]
+    },
+    "paiement": {
+      "js": [
+        "build/runtime.js",
+        "build/paiement.js"
+      ]
+    },
+    "forum": {
+      "js": [
+        "build/runtime.js",
+        "build/forum.js"
+      ],
+      "css": [
+        "build/forum.css"
+      ]
+    }
+  }
+}

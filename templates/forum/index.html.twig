@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Forum Rékilibre">
+        <meta name="theme-color" content="#ffffff">
+        <title>Rékilibre - Forum</title>
+        <link href="{{ asset('build/app.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('build/forum.css') }}" rel="stylesheet">
+        <script src="{{ asset('build/forum.js') }}"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+        <link rel="icon" type="image/png" />
+        {% block stylesheets %}
+            <link href="{{ asset('build/app.css') }}" rel="stylesheet"/>
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('build/forum.js') }}"></script>
+        {% endblock %}
+
+
+    </head>
+    <body>
+        <header>
+
+            <div id="nav">
+                <div class="logoNavBar">
+                    <img src="{{ asset('build/images/ico-stone-tower.png') }}">
+                </div>
+
+                <ul>
+                    <li><a href="/"> Retour vers Rekilibre ➡</i>  </a> </li>
+                </ul>
+            </div>
+
+        </header>
+
+
+
+
+            <div id="main" class="main">
+
+                <div id="presentationForum" class="presentationForum">
+
+                    <h1>Forum de discussion Rekilibre</h1>
+
+                </div>
+
+
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+
+
+
+                <div id="content" class="content">
+                        <div id="right">
+                            <button id="ajoutDiscussionbutton" onclick="openCreateDiscussion()">Démarrer une discussion</button>
+
+                            {%if (is_granted('ROLE_ADMIN')) %}
+                                <button id="ajoutCategoriebutton" onclick="openCreateCategory()">Créer une catégorie</button>
+                            {% endif %}
+
+
+
+                            {% if allCategories is not empty %}
+                                {% for i in 0..allCategories|length-1 %}
+                                    {% if allCategories[i] is defined %}
+                                        <div class="discution">
+                                            <a href="#">{{allCategories[i].title}}</a>
+                                        </div>
+                                    {%endif%}
+                                {%endfor%}
+                            {%endif%}
+                        </div>
+
+                        <div id="discutions">
+                            <div class="rechercheDiscussion">
+
+                                {{ form_start(formSearch,{'attr': {'class': 'rechercheDiscussion'}}) }}
+                                {{ form_widget(formSearch.query ,{'attr': {'class': 'rechercheField'}} ) }}
+                                {{ form_widget(formSearch.recherche) }}
+                                {{ form_end(formSearch) }}
+
+                            </div>
+
+                            {% if alldiscussion is not empty %}
+                                {% for i in 0..alldiscussion|length-1 %}
+                                    {% if alldiscussion[i] is defined %}
+
+                                            <div onclick="location.href='{{path('show_discussion',{'id':alldiscussion[i].id})}}'" class="topic">
+
+                                                <div class="deleteDiv">
+                                                    {%if (alldiscussion[i].getAuthorId() == userCurrent) or (is_granted('ROLE_ADMIN')) %}
+                                                        <a class="delete" href="{{path('delete_discussion',{'id':alldiscussion[i].id})}}" onclick='return confirm("Êtes-vous sûr de vouloir supprimer cette discussion ?")'>❌</a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="logo">
+                                                    <img src="{{ asset('build/images/ico-stone-tower.png') }}">
+                                                </div>
+
+                                                <div class="title">
+                                                    <h1>{{alldiscussion[i].title}}</h1>
+
+                                                    <p>Par <span>{{alldiscussion[i].getAuthorId().getFirstname()}} {{alldiscussion[i].getAuthorId().getSurname()}}</span> - {{alldiscussion[i].createdAt|date("d/m/Y")}} à {{alldiscussion[i].createdAt|date("G:i")}}</p>
+
+                                                </div>
+
+                                                <div class="info">
+                                                    {% for categorie  in alldiscussion[i].getCategorieDiscussion() %}
+                                                        <button style="background-color: {{ categorie.color }}">{{categorie.title }}</button>
+                                                    {% endfor %}
+
+
+                                                </div>
+
+
+                                            </div>
+
+                                    {%endif%}
+                                {%endfor%}
+                            {%endif%}
+                            <div class="paginationDiscussion">
+                                {{ knp_pagination_render(alldiscussion) }}
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+
+        {{ form_start(form) }}
+        <div id="createDiscussion">
+            <div class="createContent">
+                <h1>Démarrer une discussion</h1>
+
+                <hr>
+
+                {{ form_label(form.title) }}
+
+                {{ form_widget(form.title, {'attr': {'class': 'input'}}) }}
+
+
+                {{ form_label(form.CategorieDiscussion) }}
+
+                {{ form_widget(form.CategorieDiscussion, {'attr': {'class':'select'}}) }}
+
+                {{ form_widget(form.Ajouter,{'attr':{'class':'green'}}) }}
+            </div>
+
+
+        </div>
+        {{ form_end(form) }}
+
+        {%if (is_granted('ROLE_ADMIN')) %}
+            {{ form_start(formCate) }}
+            <div id="createCategory">
+                <div class="createContent">
+                    <h1>Créer une catégorie</h1>
+
+                    <hr>
+                    <br>
+
+                    {{ form_label(formCate.title) }}
+                    <br>
+                    {{ form_widget(formCate.title, {'attr': {'class': 'input'}}) }}
+
+                    <br>
+
+                    {{ form_label(formCate.roleRequis) }}
+                    <br>
+                    {{ form_widget(formCate.roleRequis, {'attr': {'class':'select'}}) }}
+
+                    {{ form_widget(formCate.Creer) }}
+                    {{ form_end(formCate) }}
+
+                </div>
+            </div>
+
+        {% endif %}
+    </body>
+
+    <script>
+
+        function openCreateDiscussion() {
+
+            document.getElementById("main").style.filter = "blur(2px)";
+            document.getElementById("createDiscussion").style.display = "inline-block";
+        }
+
+        function openCreateCategory() {
+            document.getElementById("main").style.filter = "blur(2px)";
+            document.getElementById("createCategory").style.display = "inline-block";
+        }
+
+        document.onclick = function(e){
+            console.log(e.target.id);
+            if((e.target.id == 'right') || (e.target.id == 'discutions') || (e.target.id == 'main') || (e.target.id == 'presentationForum') || (e.target.id == 'content')  ){
+
+                document.getElementById("main").style.filter = "blur(0px)";
+                document.getElementById("createDiscussion").style.display = "none";
+                document.getElementById("createCategory").style.display = "none";
+            }
+
+        }
+
+
+
+
+    </script>
+</html>

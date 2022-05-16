@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% set numberStep = { 
+        1: 'One', 
+        2: 'Two', 
+        3: 'Three',
+        4: 'Four',
+        5: 'Five',
+    } 
+%}
+
+{% block title %}
+    {{ parent() }}
+    - Inscription
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-10 mt-4 p-2 shadow-lg p-3 h-100 layout-description">
+            {% if step < 5 %}
+            <div class="bs-stepper">
+                <div class="bs-stepper-header p-4" role="tablist">
+                    {% include 'registration/stepIcone/stepIcone.html.twig' 
+                        with {'thisStepNumber':1,'thisStepName':'Contact','step': step, 'fontClass': 'fas fa-id-card', 'icoRoute': path('app_register_step_one', {'id':idRegistration})}  %}
+                    <div class="line"></div>
+                    {% include 'registration/stepIcone/stepIcone.html.twig' 
+                        with {'thisStepNumber':2,'thisStepName':'Informations','step': step, 'fontClass': 'fas fa-info', 'icoRoute': path('app_register_step_two', {'id':idRegistration}) }  %}
+                    <div class="line"></div>
+                    {% include 'registration/stepIcone/stepIcone.html.twig' 
+                        with {'thisStepNumber':3,'thisStepName':'Activités','step': step, 'fontClass': 'fas fa-running', 'icoRoute': path('app_register_step_three', {'id':idRegistration}) } %}
+                    <div class="line"></div>
+                    {% include 'registration/stepIcone/stepIcone.html.twig' 
+                        with {'thisStepNumber':4,'thisStepName':'Validation','step': step, 'fontClass': 'fas fa-check', 'icoRoute': '#'}  %}
+                </div>
+            </div>
+            {% endif %}
+            <div class="p-4">
+            {% include 'registration/steps/step'~ numberStep[step] ~'.html.twig'
+                 with {'thisStepNumber': step} %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

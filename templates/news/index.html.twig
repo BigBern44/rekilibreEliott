@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/news.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('build/detailActivity.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }}
+    - Actualités
+{% endblock %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="row mb-4 justify-content-center">
+            <button class="btn btn-primary" id="btn-add-news">Ajouter une actualité</button>
+        </div>
+    {% endif %}
+    <div class="row justify-content-center">
+
+        <div id="layout-form-news" style="display:none">
+            {{ form_start(form) }}
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title) }}
+            {{ form_label(form.content) }}
+            {{ form_widget(form.content,{'id':'summernote'}) }}
+            {{ form_widget(form.Valider,{'attr':{'class':'btn btn-success mt-2'}}) }}
+            <button class="btn btn-danger mt-2" id="btn-close-form-news" type="button">Annuler</button>
+            {{ form_end(form) }}
+        </div>
+
+        <div class="row col-md-12 mb-2">
+			{% if allnews is not empty %}
+            {% for i in 0..allnews|length-1 %}
+                {% if allnews[i] is defined %}
+                    <div class="col-6 mb-5 pl-4 pr-2">
+                        <div class="shadow-lg p-3 h-100 layout-description d-flex flex-column">
+                            <div id="layout-description{{i}}">
+                                <h3>{{allnews[i].title}}</h3>
+                                <div>
+                                    {{allnews[i].content | raw}}
+                                </div>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <button class="btn btn-primary btn-edit" idnews="{{i}}">Modifier</button>
+                                    <a class="btn btn-danger" href="{{(path('delete-news',{'id': allnews[i].id}))}}">Supprimer</a>
+                                {% endif %}
+                            </div>
+                            <div id="layout-summmernote{{i}}" style="display:none">
+                                {{ form_start(formModifyAllNews[i]) }}
+                                {{ form_widget(formModifyAllNews[i].title) }}
+                                {{ form_widget(formModifyAllNews[i].content, {'id': 'summernote','attr':{'class':'summernote-modify'}}) }}
+                                <div class="mt-2">
+                                    {{ form_widget(formModifyAllNews[i].Valider, {'attr':{'class':'btn-success'}}) }}
+                                    <button class="btn btn-danger btn-cancel" idnews="{{i}}" type="button">Annuler</button>
+                                </div>
+                                {{ form_end(formModifyAllNews[i]) }}
+                            </div>
+                        </div>
+                    </div>
+                    {% set i = i + 1 %}
+                {% endif %}
+            {% endfor %}
+			{% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/news.js') }}"></script>
+    <script src="{{ asset('build/detailActivity.js') }}"></script>
+{% endblock %}

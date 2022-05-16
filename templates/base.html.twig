@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+{% set current_path = app.request.get('_route') %}
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+		<title>
+			{% block title %}Rékilibre
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<link href="{{ asset('build/app.css') }}" rel="stylesheet"/>
+		{% endblock %}
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+	</head>
+	<body>
+		{% block navbar %}
+			<nav class="navbar navbar-expand-lg navbar-light bg-secondary shadow-lg p-3 mb-5 fixed-top" style="background-image:url({{asset('build/images/nav-purple-brown.png')}});background-repeat: no-repeat;background-color: white;">
+				<a class="navbar-brand p-0" href="#">
+					<img height="50px" src="{{ asset('build/images/simple-brand.png') }}"/>
+				</a>
+				<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse ml-4" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+
+						<li {% if controller_name == "HomeController" %} class="nav-item active mx-2" {% else %} class="nav-item mx-2" {% endif %}>
+
+							<a class="nav-link" href="{{(path('home'))}}">Accueil
+								{% if controller_name == "HomeController" %}
+									<span class="sr-only">(current)</span>
+								{% endif %}
+							</a>
+						</li>
+
+						<li {% if controller_name == "NewsController" %} class="nav-item active mx-2" {% else %} class="nav-item mx-2" {% endif %}>
+							<a class="nav-link" href="{{(path('news'))}}">Actualités
+								{% if controller_name == "NewsController" %}
+									<span class="sr-only">(current)</span>
+								{% endif %}
+							</a>
+						</li>
+
+						<li {% if controller_name == "ActivitiesController" %} class="nav-item active mx-2" {% else %} class="nav-item mx-2" {% endif %}>
+							<a class="nav-link" href="{{(path('activities'))}}">Activités
+								{% if controller_name == "ActivitiesController" %}
+									<span class="sr-only">(current)</span>
+								{% endif %}
+							</a>
+						</li>
+
+						<li {% if controller_name == "CalendarController" %} class="nav-item active mx-2" {% else %} class="nav-item mx-2" {% endif %}>
+							<a class="nav-link" href="{{(path('calendar'))}}">Calendrier
+								{% if controller_name == "CalendarController" %}
+									<span class="sr-only">(current)</span>
+								{% endif %}
+							</a>
+						</li>
+
+						<li {% if controller_name == "IntervenerController" %} class="nav-item active mx-2" {% else %} class="nav-item mx-2" {% endif %}>
+							<a class="nav-link" href="{{(path('interveners'))}}">Intervenants
+								{% if controller_name == "IntervenerController" %}
+									<span class="sr-only">(current)</span>
+								{% endif %}
+							</a>
+						</li>
+
+						<li {% if controller_name == "ForumController" %} class="nav-item active mx-2" {% else %} class="nav-item mx-2" {% endif %}>
+							<a class="nav-link" href="{{(path('forum'))}}"> Forum
+								{% if controller_name == "ForumController" %}
+									<span class="sr-only">(current)</span>
+								{% endif %}
+							</a>
+						</li>
+
+						
+
+						{% if app.user %}
+							<li {% if controller_name == "PersonalSpaceController" %} class="nav-item active mx-2" {% else %} class="nav-item mx-2" {% endif %}>
+								<a class="nav-link" href="{{(path('personal_space'))}}">Mon espace
+									{% if controller_name == "PersonalSpaceController" %}
+										<span class="sr-only">(current)</span>
+									{% endif %}
+								</a>
+							</li>
+							{% if not ('ROLE_ADHERENT' in app.user.roles) %}
+								<li {% if controller_name == "RegistrationController" %} class="nav-item active mx-2" {% else %} class="nav-item mx-2" {% endif %}>
+									<a class="nav-link" href="{{(path('re_register',{'id':app.user.id}))}}">Réinscription
+										{% if controller_name == "RegistrationController" %}
+											<span class="sr-only">(current)</span>
+										{% endif %}
+									</a>
+								</li>
+							{% endif %}
+						{% endif %}
+
+						{% if is_granted('ROLE_ADMIN') %}
+							<li {% if controller_name == "AdministrationController" %} class="nav-item active mx-2" {% else %} class="nav-item mx-2" {% endif %}>
+
+								<a class="nav-link" href="{{(path('administration'))}}">Administration
+									{% if controller_name == "AdministrationController" %}
+										<span class="sr-only">(current)</span>
+									{% endif %}
+								</a>
+							</li>
+						{% endif %}
+
+					</ul>
+					{% if app.user %}
+						{% if app.user.notifications|length %}
+							<a data-content="{% for notif in app.user.notifications %}<p class='text-m mt-2'>{{notif.title}} <br><a href='{{notif.link}}'><i class='fas fa-eye text-primary' ></i></a> <a href='#'><i class='fas fa-times text-danger'></i></a></p><hr>{% endfor %}" data-html="true" data-placement="left" data-toggle="popover" href="#" title="Notifications">
+								<i class="far fa-bell text-xl text-primary m-2"></i>
+							</a>
+						{% endif %}
+
+						<a href="{{path('app_logout')}}" data-toggle="tooltip" data-placement="right" title="Déconnexion">
+							<i class="fas fa-sign-out-alt text-xl text-danger m-2"></i>
+						</a>
+					{% else %}
+						<a class="btn btn-primary mr-4" href="{{path('app_login')}}">
+							Connexion
+						</a>
+						<a class="btn btn-primary mr-4" href="{{(path('app_register'))}}">
+							Inscription
+						</a>
+					{% endif %}
+				</div>
+			</nav>
+			<div style="height:13vh"></div>
+		{% endblock %}
+		{% for message in app.flashes('success') %}
+			<div class="row justify-content-center">
+				<div class="alert alert-success col-md-10 fly" role="alert">
+					<button class="close" data-dismiss="alert" type="button">×</button>
+					{{ message }}
+				</div>
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('error') %}
+			<div class="row justify-content-center">
+				<div class="alert alert-danger col-md-10 fly" role="alert">
+					<button class="close" data-dismiss="alert" type="button">×</button>
+					{{ message }}
+				</div>
+			</div>
+		{% endfor %}
+		<div class="mb-12"> {% block body %}
+		
+		{% endblock %}
+			</diV>
+			{% block javascripts %}
+				<script src="{{ asset('build/runtime.js') }}"></script>
+				<script src="{{ asset('build/app.js') }}"></script>
+			{% endblock %}
+
+			<!-- Footer -->
+			<footer class="page-footer font-small blue">
+				<div class="row">
+					<div class="col-md-3">
+						<div class="text-center py-1">© 2018 Copyright: Rekilibre</div>
+					</div>
+					<div class="col-md-3">
+						<div class="text-center py-1">
+							<a href="#" data-target="#modalUtilisationDonnees" data-toggle="modal" style="color:white">Mentions légales RGPD</a>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="text-center py-1">
+							<a href="#" data-target="#modalContact" data-toggle="modal" style="color:white">Contact</a>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="text-center py-1">
+							<a href="#" data-target="#modalCoordonnees" data-toggle="modal" style="color:white">Coordonnées</a>
+						</div>
+					</div>
+				</div>
+			</footer>
+			{% include 'modal/accueil/contact.html.twig' %}
+			{% include 'modal/accueil/coordonnees.html.twig' %}
+			{% include 'modal/accueil/utilisationDonnees.html.twig' %}
+		</body>
+	</html>

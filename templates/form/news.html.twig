@@ -1,0 +1,9 @@
+{% extends 'modal/form_layout.html.twig' %}
+{% block modaltitle %}Ajouter une actualité{% endblock %}
+{% block modalbody %}
+    {{ form_label(form.title) }}
+    {{ form_widget(form.title) }}
+
+    {{ form_label(form.content) }}
+    {{ form_widget(form.content) }}
+{% endblock %}

@@ -1,0 +1,23 @@
+<div aria-hidden="true" aria-labelledby="modalFormParametersLabel" class="modal fade" id="modalFormParameters" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            {{form_start(formParameters)}}
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFormIntervenerLabel">Choisir une Date</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {{ form_row(formParameters.firstDate) }}
+            {{ form_row(formParameters.secondDate) }}
+            {{ form_row(formParameters.thirdDate) }}
+            {{ form_row(formParameters.annee,{value : 3}) }}
+            <div class="modal-footer">
+                {{ form_widget(formParameters.Valider,{'attr':{'class':'btn btn-success'}}) }}
+                <button class="btn btn-danger" data-dismiss="modal" type="button">Fermer</button>
+            </div>
+
+            {{form_end(formParameters)}}
+        </div>
+    </div>
+</div>

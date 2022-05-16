@@ -1,0 +1,67 @@
+# $Id: $
+#
+# This is used with Apache WebServers
+#
+# For this to work, you must include the parameter 'Options' to
+# the AllowOverride configuration
+#
+# Example:
+#
+# <Directory "/usr/local/apache/htdocs">
+#   AllowOverride Options
+# </Directory>
+#
+# 'All' with also work. (This configuration is in the
+# apache/conf/httpd.conf file)
+
+# The following makes adjustments to the SSL protocol for Internet
+# Explorer browsers
+
+#<IfModule mod_setenvif.c>
+#  <IfDefine SSL>
+#    SetEnvIf User-Agent ".*MSIE.*" \
+#             nokeepalive ssl-unclean-shutdown \
+#             downgrade-1.0 force-response-1.0
+#  </IfDefine>
+#</IfModule>
+
+# If Search Engine Friendly URLs do not work, try enabling the
+# following Apache configuration parameter
+
+# AcceptPathInfo On
+
+# Fix certain PHP values
+# (commented out by default to prevent errors occuring on certain
+# servers)
+
+# php_value session.use_trans_sid 0
+# php_value register_globals 1
+order allow,deny
+deny from 5.10.83
+deny from .ru
+deny from .it
+deny from 66.249.73.183
+deny from 66.249.76.117
+deny from 66.249.75.117
+deny from 66.249.75.165
+deny from 109.211.205.135
+deny from 167.77.22.93
+deny from 65.55.24.215
+deny from 157.55.33.113
+deny from 157.55.36.37
+deny from 157.55.35.88
+deny from 157.55.35.105
+deny from 157.55.35.46
+deny from 226.9.207.91
+deny from 91.200.14.59
+deny from 69.197.128.114
+deny from 37.140.141.6
+deny from 66.249.66.165
+deny from 162.243.223.44
+deny from 198.20.65.18
+deny from 66.249.76.179
+deny from 66.249.76
+deny from 66.249.73
+deny from 162.243.111.248
+deny from 188.143.232
+allow from all

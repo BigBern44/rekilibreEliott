@@ -1,0 +1,36 @@
+{{form_start(registrationForm)}}
+<div class="row">
+	<div class="col-12">
+		{{form_row(registrationForm.boardCandidate)}}
+	</div>
+	<div class="col-12">
+		{{form_row(registrationForm.agreePhoto)}}
+	</div>
+	<div class="col-12">
+		{{form_row(registrationForm.subscriber)}}
+	</div>
+	<div class="col-12">
+		{{form_row(registrationForm.plainPassword)}}
+	</div>
+	<div class="col-12 mb-3 text-primary">
+		Merci d'indiquer les chèques joints à votre inscription :
+	</div>
+	<div class="col-12">
+		{{form_row(registrationForm.membershipCheck)}}
+	</div>
+	<div class="col-12 text-danger">
+		ET
+	</div>
+	<div class="col-12 mt-3">
+		{{form_row(registrationForm.activitiesSingleCheck)}}
+	</div>
+	<div class="col-12 text-danger">
+		OU
+	</div>
+	<div class="col-12 mt-3">
+		{{form_row(registrationForm.activitiesMultiChecks)}}
+	</div>
+</div>
+
+{% include 'registration/components/navigation.html.twig' %}
+{{form_end(registrationForm)}}

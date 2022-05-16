@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }}
+    - Calendrier
+{% endblock %}
+{% block body %}
+    <div class="row justify-content-center">
+        <!--
+        <div class="row col-md-11 mr-2 mb-2">
+            <div class="row col-md-12 shadow-lg p-3 ml-4 layout-description">
+                <h3>Filtres :
+                </h3>
+                <a href="{{path('calendar_criteria',{'btnName':'ponctual', 'month': month})}}" {% if app.session.get('calendar-display-ponctual') %} class="btn btn-primary mx-2" {% else %} class="btn btn-danger mx-2" {% endif %} type="button">Activités ponctuelles</a>
+                <a href="{{path('calendar_criteria',{'btnName':'hebdo', 'month': month})}}" {% if app.session.get('calendar-display-hebdo') %} class="btn btn-primary" {% else %} class="btn btn-danger" {% endif %} type="button">Séances hebdomadaires</a>
+            </div>
+        </div>
+        -->
+        <div class="col-md-11 mr-4" style="height:80vh;">
+            <div class="col-md-12 shadow-lg p-3 mb-5 ml-4 h-100 layout-description">
+                <div class="row justify-content-center" style="text-align:center;">
+                    <div class="col-md-2">
+                        {% if month == 13 or month == 1 %}
+                            <a href="{{path('calendar', { 'month': month - 1, 'year': year - 1})}}">
+                                <h2>Précédent</h2>
+                            </a>
+                        {% else %}
+                            <a href="{{path('calendar', { 'month': month - 1, 'year': year})}}">
+                                <h2>Précédent</h2>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <h2>{{monthName | trans}} - {{year}}</h2>
+                    </div>
+                    <div class="col-md-2">
+                        {% if month == 12 or month == 0 %}
+                            <a href="{{path('calendar', { 'month': month + 1, 'year': year + 1})}}">
+                                <h2>Suivant</h2>
+                            </a>
+                        {% else %}
+                            <a href="{{path('calendar', { 'month': month + 1, 'year': year})}}">
+                                <h2>Suivant</h2>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-1 justify-content-center">
+                    <div class="m-1 calendar-cell-day">Lundi</div>
+                    <div class="m-1 calendar-cell-day">Mardi</div>
+                    <div class="m-1 calendar-cell-day">Mercredi</div>
+                    <div class="m-1 calendar-cell-day">Jeudi</div>
+                    <div class="m-1 calendar-cell-day">Vendredi</div>
+                    <div class="m-1 calendar-cell-day">Samedi</div>
+                    <div class="m-1 calendar-cell-day">Dimanche</div>
+                </div>
+                {% set cursor = 1 %}
+                {% set nextMonth = 1 %}
+                {% set lastMonth = numberDaysLast - firstDay + 1 %}
+                {% for week in range(1,6) %}
+                    <div class="row mb-1 justify-content-center" style="height:14%;">
+                        {% for day in range(1,7) %}
+                            {% if lastMonth < numberDaysLast %}
+                                <div class="m-1 p-1 calendar-cell calendar-cell-out">{{lastMonth}}</div>
+                                {% set lastMonth = lastMonth + 1 %}
+                            {% else %}
+                                {% if cursor <= numberDays %}
+                                    {% if arrayActivitiesPonctual[ cursor - 1 ]|length > 0 %}
+                                        <div class="m-1 p-1 calendar-cell calendar-cell-ponctual-event">
+                                            {{cursor}}
+                                            {% for activity in arrayActivitiesPonctual[ cursor - 1 ] %}
+                                                <a href="{{path('detail_activity', { 'id': activity.id})}}" class="link-calendar text-white">
+                                                    <p class="m-0">{{activity.fromTime|date('H:i')}}-{{activity.toTime|date('H:i')}}: {{activity.name}}</p>
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        <div class="m-1 p-1 calendar-cell">{{cursor}}</div>
+                                    {% endif %}
+                                    {% set cursor = cursor + 1 %}
+                                {% else %}
+                                    <div class="m-1 p-1 calendar-cell calendar-cell-out">{{nextMonth}}</div>
+                                    {% set nextMonth = nextMonth + 1 %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <!--
+                <div class="row justify-content-center p-2">
+                    <div class="col-md-2 mx-4 calendar-cell-hebdo-event">Hebdomadaires</div>
+                    <div class="col-md-2 mx-4 calendar-cell-ponctual-event">Ponctuelles</div>
+                    <div class="col-md-2 mx-4 calendar-cell-all-event">Hebdomadaires et ponctuelles</div>
+                </div>
+                -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

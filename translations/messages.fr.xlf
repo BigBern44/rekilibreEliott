@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" 
+            original="file.ext">
+        <body>
+            <!--Jours-->
+            <trans-unit id="jour1">
+                <source>jour1</source>
+                <target>Lundi</target>
+            </trans-unit>
+            <trans-unit id="jour2">
+                <source>jour2</source>
+                <target>Mardi</target>
+            </trans-unit>
+            <trans-unit id="jour3">
+                <source>jour3</source>
+                <target>Mercredi</target>
+            </trans-unit>
+            <trans-unit id="jour4">
+                <source>jour4</source>
+                <target>Jeudi</target>
+            </trans-unit>
+            <trans-unit id="jour5">
+                <source>jour5</source>
+                <target>Vendredi</target>
+            </trans-unit>
+            <trans-unit id="jour6">
+                <source>jour6</source>
+                <target>Samedi</target>
+            </trans-unit>
+            <trans-unit id="jour7">
+                <source>jour7</source>
+                <target>Dimanche</target>
+            </trans-unit>
+
+            <!--Jours-->
+            <trans-unit id="monday">
+                <source>Monday</source>
+                <target>Lundi</target>
+            </trans-unit>
+            <trans-unit id="tuesday">
+                <source>Tuesday</source>
+                <target>Mardi</target>
+            </trans-unit>
+            <trans-unit id="wednesday">
+                <source>Wednesday</source>
+                <target>Mercredi</target>
+            </trans-unit>
+            <trans-unit id="thursday">
+                <source>Thursday</source>
+                <target>Jeudi</target>
+            </trans-unit>
+            <trans-unit id="friday">
+                <source>Friday</source>
+                <target>Vendredi</target>
+            </trans-unit>
+            <trans-unit id="saturday">
+                <source>Saturday</source>
+                <target>Samedi</target>
+            </trans-unit>
+            <trans-unit id="sunday">
+                <source>Sunday</source>
+                <target>Dimanche</target>
+            </trans-unit>
+
+            <!--Mois-->
+            <trans-unit id="january">
+                <source>January</source>
+                <target>Janvier</target>
+            </trans-unit>
+            <trans-unit id="february">
+                <source>February</source>
+                <target>Février</target>
+            </trans-unit>
+            <trans-unit id="march">
+                <source>March</source>
+                <target>Mars</target>
+            </trans-unit>
+            <trans-unit id="april">
+                <source>April</source>
+                <target>Avril</target>
+            </trans-unit>
+            <trans-unit id="may">
+                <source>May</source>
+                <target>Mai</target>
+            </trans-unit>
+            <trans-unit id="june">
+                <source>June</source>
+                <target>Juin</target>
+            </trans-unit>
+            <trans-unit id="july">
+                <source>July</source>
+                <target>Juillet</target>
+            </trans-unit>
+            <trans-unit id="august">
+                <source>August</source>
+                <target>Août</target>
+            </trans-unit>
+            <trans-unit id="september">
+                <source>September</source>
+                <target>Septembre</target>
+            </trans-unit>
+            <trans-unit id="october">
+                <source>October</source>
+                <target>Octobre</target>
+            </trans-unit>
+            <trans-unit id="november">
+                <source>November</source>
+                <target>Novembre</target>
+            </trans-unit>
+            <trans-unit id="december">
+                <source>December</source>
+                <target>Décembre</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

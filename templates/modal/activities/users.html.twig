@@ -1,0 +1,29 @@
+<div aria-hidden="true" aria-labelledby="modalUsersLabel" class="modal fade" id="modalUsers{{activity.id}}" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalUsersLabel">Activité:
+                    {{activity.displayName}}</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if activity.users|length %}
+                    {% for user in activity.users %}
+                        <div class="row">
+                            <div class="col">
+                                {{ user.displayNameContact }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    Aucun participant
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal" type="button">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

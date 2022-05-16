@@ -1,0 +1,12 @@
+{{form_start(registrationForm)}}
+<div class="row">
+    <div class="col-6">
+        {{form_row(registrationForm.emailAddress)}}
+    </div>
+    <div class="col-6">
+        {{form_row(registrationForm.phone)}}
+    </div>
+</div>
+
+{% include 'registration/components/navigation.html.twig' %}
+{{form_end(registrationForm)}}

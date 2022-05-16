@@ -1,0 +1,71 @@
+<script
+
+></script>
+<div aria-hidden="true" aria-labelledby="modalFormUserLabel" class="modal fade" id="modalFormUser{{id}}" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            {{ form_start(formModifyUser) }}
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFormUserLabel">Modifier un utilisateur</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyUser.email) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyUser.plainPassword) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyUser.firstname) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyUser.surname) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyUser.gender) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyUser.birthdate, {'id': 'add_user_birthdate' ~ id, 'attr': {'data-target': '#add_user_birthdate' ~ id}}) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyUser.postAddress) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyUser.zipCode) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyUser.city) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyUser.phone) }}
+                    </div>
+                </div>
+                
+                {{ form_row(formModifyUser.status) }}
+                {{ form_row(formModifyUser.roles) }}
+                {{ form_row(formModifyUser.activities) }}
+            </div>
+            <div class="modal-footer">
+                {{ form_widget(formModifyUser.Valider,{'attr':{'class':'btn btn-success'}}) }}
+                <button class="btn btn-danger" data-dismiss="modal" type="button">Fermer</button>
+            </div>
+            {{ form_end(formModifyUser) }}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }}
+    - Activités
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="row col-md-11">
+            <div class="col-12 mb-5 pl-4 pr-2">
+                <div class="shadow-lg p-3 h-100 layout-description text-center">
+                    {% if activityType == 'ponctual' %}
+                        <div class='row'>
+                            <div class='col-xl-3 col-md-4 col-sm-6'>
+                                <a href="{{path('activities',{'type':'ponctual'})}}" class="btn btn-block btn-primary">Activités ponctuelles</a>
+                            </div>
+                            <div class='col-xl-3 col-md-4 col-sm-6'>
+                                <a href="{{path('activities',{'type':'hebdo'})}}" class="btn btn-block btn-secondary">Activités hebdomadaires</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class='row'>
+                            <div class='col-xl-3 col-md-4 col-sm-6'>
+                                <a href="{{path('activities',{'type':'ponctual'})}}" class="btn btn-block btn-secondary">Activités ponctuelles</a>
+                            </div>
+                            <div class='col-xl-3 col-md-4 col-sm-6'>
+                                <a href="{{path('activities',{'type':'hebdo'})}}" class="btn btn-block btn-primary">Activités hebdomadaires</a>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if activityType == 'ponctual' %}
+                        <div class="row">
+                            {% for activity in activities %}
+                                <div class="col-xl-2 col-md-3 col-sm-4 p-2">
+                                    <div class="card bg-primary mb-3">
+                                        {% if activity.picture is not null %}
+                                            <img class="card-img-top" src="{{asset(pictures_directory ~ activity.picture.url)}}" alt="Image de l'activité" style="height: 16rem;">
+                                        {% else %}
+                                            <img class="card-img-top" src="https://images.freeimages.com/images/large-previews/0d9/champagne-1325712.jpg" alt="Image de l'activité" style="height: 16rem;">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <div style="min-height:150px">
+                                                <h5 class="card-title text-white text-m">{{activity.name}}</h5>
+                                            </div>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">{{activity.fromDateTime|date('d/m/Y')}}</li>
+                                                <li class="list-group-item">{{activity.fromTime|date('H:i')}}
+                                                    à
+                                                    {{activity.toTime|date('H:i')}}</li>
+                                            </ul>
+                                        </div>
+                                        <a class="btn btn-dark btn-block" href="{{path('detail_activity',{'id':activity.id})}}">
+                                            <i class="fas fa-info-circle text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="row">
+                            {% for activity in activities %}
+                                <div class="col-xl-2 col-md-3 col-sm-4 p-2">
+                                    <div class="card bg-primary mb-3">
+                                        {% if activity.picture is not null %}
+                                            <img class="card-img-top" src="{{asset(pictures_directory ~ activity.picture.url)}}" alt="Image de l'activité" style="height: 16rem;">
+                                        {% else %}
+                                            <img class="card-img-top" src="https://images.freeimages.com/images/large-previews/404/relax-1308028.jpg" alt="Image de l'activité" style="height: 16rem;">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <div style="min-height:150px">
+                                                <h5 class="card-title text-white text-m">{{activity.name}}</h5>
+                                            </div>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">{{constant('App\\Service\\Constants\\DayString::DAYSTRING')[activity.day]}}</li>
+                                                <li class="list-group-item">{{activity.fromTime|date('H:i')}}
+                                                    à
+                                                    {{activity.toTime|date('H:i')}}</li>
+                                            </ul>
+                                        </div>
+                                        <a class="btn btn-dark btn-block" href="{{path('detail_activity',{'id':activity.id})}}">
+                                            <i class="fas fa-info-circle text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

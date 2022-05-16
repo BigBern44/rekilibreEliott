@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }}
+    - Accueil
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-1 m-1 p-0 menu-icon" id="vignette0" tag="0">
+            <img width="80%" src="{{ asset('build/images/ico-stone-tower.png') }}" data-toggle="tooltip" data-placement="top" title="Equilibre"/>
+        </div>
+        <div class="col-1 m-1 p-0 menu-icon" id="vignette1" tag="1">
+            <img width="80%" src="{{ asset('build/images/ico-purple-flower.png') }}" data-toggle="tooltip" data-placement="top" title="Lâcher prise"/>
+        </div>
+        <div class="col-1 m-1 p-0 menu-icon" id="vignette2" tag="2">
+            <img width="80%" src="{{ asset('build/images/ico-yoga-woman.png') }}" data-toggle="tooltip" data-placement="top" title="Bienveillance"/>
+        </div>
+        <div class="col-1 m-1 p-0 menu-icon" id="vignette3" tag="3">
+            <img width="80%" src="{{ asset('build/images/ico-zen-candles.png') }}" data-toggle="tooltip" data-placement="top" title="Découvertes"/>
+        </div>
+        <div class="col-1 m-1 p-0 menu-icon" id="vignette4" tag="4">
+            <img width="80%" src="{{ asset('build/images/ico-peoples-trust.png') }}" data-toggle="tooltip" data-placement="top" title="Accueillir"/>
+        </div>
+        <div class="col-1 m-1 p-0 menu-icon" id="vignette5" tag="5">
+            <img width="80%" src="{{ asset('build/images/ico-growing-plant.png') }}" data-toggle="tooltip" data-placement="top" title="Acceptation"/>
+        </div>
+        <div class="col-1 m-1 p-0 menu-icon" id="vignette6" tag="6">
+            <img width="80%" src="{{ asset('build/images/ico-reiki-energy.png') }}" data-toggle="tooltip" data-placement="top" title="Harmonie"/>
+        </div>
+        <div class="col-1 m-1 p-0 menu-icon" id="vignette7" tag="7">
+            <img width="80%" src="{{ asset('build/images/ico-simple-bambou.png') }}" data-toggle="tooltip" data-placement="top" title="Echanges"/>
+        </div>
+
+        {% for i in range(0,7) %}
+            <div id="layout-article-editor{{i}}" class="col-md-10 mt-4 p-2 shadow-lg p-3 h-100 layout-description" {% if(i != 0) %} style="display:none" {% endif %}>
+                <div id="layout-article{{i}}">
+                    <div>{{homeArticles[i].content | raw}}</div>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <button class="btn btn-primary mt-2" id="btn-edit{{i}}" tag="{{i}}">Modifier</button>
+                    {% endif %}
+                </div>
+
+                <div id="layout-summmernote{{i}}" style="display:none">
+                    {{ form_start(formHomeArticles[i]) }}
+                    {{ form_widget(formHomeArticles[i].content, {'id': 'summernote' ~ i}) }}
+                    <div class="mt-2">
+                        {{ form_widget(formHomeArticles[i].Valider, {'attr':{'class':'btn-success'}}) }}
+                        <button class="btn btn-danger" id="btn-cancel{{i}}" type="button" tag="{{i}}">Annuler</button>
+                    </div>
+                    {{ form_end(formHomeArticles[i]) }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/home.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }}
+    - Activités
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/detailActivity.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-11 shadow-lg p-3 mb-5 h-100 layout-description">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <h1>{{activity.name}}</h1>
+                </div>
+                {% include page %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/detailActivity.js') }}"></script>
+{% endblock %}

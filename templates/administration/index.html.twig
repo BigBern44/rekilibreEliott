@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ parent() }}
+	- Administration
+{% endblock %}
+{% block body %}
+	<div class="row justify-content-center">
+		<div class="col-md-11 mr-4" style="height:80%;">
+			<div class="col-md-12 shadow-lg p-3 mb-5 ml-4 h-100 layout-description">
+				<div class='row'>
+					<div class='col-10'>
+						<ul class="nav nav-tabs">
+							<li class="nav-item">
+								<a {% if template == 'administration/hebdoActivities.html.twig' %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{path('hebdo_activities')}}">Activités hebdomadaires</a>
+							</li>
+							<li class="nav-item">
+								<a {% if template == 'administration/ponctualActivities.html.twig' %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{path('ponctual_activities')}}">Activités ponctuelles</a>
+							</li>
+							<li class="nav-item">
+								<a {% if template == 'administration/users.html.twig' %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{path('users')}}">Utilisateurs</a>
+							</li>
+							<li class="nav-item">
+								<a {% if template == 'administration/interveners.html.twig' %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{path('admin_interveners')}}">Intervenants</a>
+							</li>
+							<li class="nav-item">
+								<a {% if template == 'administration/locations.html.twig' %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{path('locations')}}">Salles</a>
+							</li>
+							<li class="nav-item">
+								<a {% if template == 'administration/payments.html.twig' %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{path('payments')}}">Paiements</a>
+							</li>
+							<li class="nav-item">
+								<a {% if template == 'administration/pictures.html.twig' %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{path('pictures')}}">Images</a>
+							</li>
+							<li class="nav-item">
+								<a {% if template == 'administration/registrations.html.twig' %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{path('registrations')}}">Adhésions</a>
+							</li>
+						</ul>
+					</div>
+					{% if is_granted('ROLE_SUPER_ADMIN') %}
+						{% if closeSeason is defined %}
+							{% if closeSeason is null %}
+								<div class='col-2'>
+									<a href='{{path('close_season')}}' class='btn btn-primary btn-block'>
+										Clôturer la saison
+									</a>
+								</div>
+							{% else %}
+								<i>Saison clôturée le
+									{{closeSeason.closeDate|date('d/m/Y')}}</i>
+							{% endif %}
+						{% endif %}
+					{% endif %}
+				</div>
+				<div class="pt-2" style="overflow-x:scroll;">
+					{% include template %}
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('build/payments.js') }}"></script>
+{% endblock %}

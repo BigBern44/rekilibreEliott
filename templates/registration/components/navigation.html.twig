@@ -1,0 +1,28 @@
+<div class="row mt-4">
+
+    {% if thisStepNumber > 1 %}
+        <div class="col-3">
+            <a class="btn btn-secondary btn-block text-white" href="{{previous}}">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </a>
+        </div>
+        <div class="col-6"></div>
+    {% else %}
+        <div class="col-9"></div>
+    {% endif %}
+
+
+    {% if thisStepNumber == 4 %}
+        <div class="col-3">
+            <button class="btn btn-success btn-block text-white" href="#" type="submit">
+                <i class="fas fa-check text-xl"></i>
+            </button>
+        </div>
+    {% else %}
+        <div class="col-3">
+            <button class="btn btn-primary btn-block text-white" href="#" type="submit" onclick="return confirm('Une foi l'inscription validée, les informations ne peuvent plus être modifiées');">
+                <i class="fas fa-arrow-right text-xl"></i>
+            </button>
+        </div>
+    {% endif %}
+</div>

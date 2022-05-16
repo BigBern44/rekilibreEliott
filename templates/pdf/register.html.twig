@@ -1,0 +1,194 @@
+{# ./templates/default/mypdf.html.twig #}
+{% set thisDate = "now"|date("Y") %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Association - R'EKILIBRE</title>
+		<style>
+			tr {
+				padding: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<center>
+			<h3>
+				<b>- Association -</b>
+			</h3>
+			<h1>
+				<b>R'EKILIBRE</b>
+			</h1>
+			<h3>
+				<b>BULLETIN D'ADHESION
+					{{thisDate}}/{{thisDate + 1}}</b>
+			</h3>
+			<p style="font-size:12px;">
+				<i>A RETOURNER A FRANCOISE CARBONNIER 4 CHEMIN DU DOMAINE 44240 LA CHAPELLE/ERDRE accompagné du règlement de l’adhésion
+				</i>
+			</p>
+		</center>
+		<hr>
+
+		<table style="width:100%">
+			<tr>
+				<td colspan="2">
+					<div>
+						<label for="subscriber" style="position: relative;vertical-align: middle;bottom: 1px;">
+							{% if registration.subscriber %}
+								<input id="subscriber" name="subscriber" type="checkbox" value="115" checked/>
+							{% else %}
+								<input id="subscriber" name="subscriber" type="checkbox" value="115"/>
+							{% endif %}
+							ANCIEN ADHERENT
+							{{thisDate - 1}}/{{thisDate}}
+						</label>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<table style="width:100%">
+			<tr>
+				<td>
+					<b>Nom:</b>
+					{{registration.lastname}}
+				</td>
+				<td>
+					<b>Prénom:</b>
+					{{registration.firstname}}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<b>Date de naissance:</b>
+					{{registration.birthdate|date('d/m/Y')}}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<b>Email:</b>
+					{{registration.emailAddress}}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<b>Adresse:</b>
+					{{registration.postAddress}}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<b>Code Postal:</b>
+					{{registration.zipCode}}
+				</td>
+				<td>
+					<b>Ville:</b>
+					{{registration.city}}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<b>Téléphone:</b>
+					{{registration.phone}}
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<table style="width:100%">
+			<tr>
+				<td colspan="2">
+					<b>Je participe à l’activité hebdomadaire :</b>
+				</td>
+			</tr>
+			{% set totalPrice = 0 %}
+			{% for activity in registration.activities %}
+				<tr>
+					<td colspan="2">
+						{{activity.displayRegistrationName}}
+					</td>
+				</tr>
+				{% set totalPrice = totalPrice + activity.price %}
+			{% endfor %}
+			<tr>
+				<td colspan="2">
+					<p>+25 euro d'adhésion</p>
+					{% set totalPrice = totalPrice + 25 %}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<b>Total à payer:</b>
+					{{totalPrice}}€
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<table style="width:100%">
+			<tr>
+				<td colspan="2">
+					<div>
+						<label for="boardCandidate" style="position: relative;vertical-align: middle;bottom: 1px;">
+							{% if registration.boardCandidate %}
+								<input id="boardCandidate" name="boardCandidate" type="checkbox" value="115" checked/>
+							{% else %}
+								<input id="boardCandidate" name="boardCandidate" type="checkbox" value="115"/>
+							{% endif %}
+							Je suis candidat(e) au Conseil d'Administration de l'association
+						</label>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div>
+						<label for="agreePhoto" style="position: relative;vertical-align: middle;bottom: 1px;">
+							{% if registration.agreePhoto %}
+								<input id="agreePhoto" name="agreePhoto" type="checkbox" value="115" checked/>
+							{% else %}
+								<input id="agreePhoto" name="agreePhoto" type="checkbox" value="115"/>
+							{% endif %}
+							J'autorise l'association R'ekilibre à mettre sur son site Internet des photos où je suis présent(e)
+						</label>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<p style="text-left;margin-bottom:50px;">
+			Signature
+		</p>
+		<hr>
+        <p style="font-size:12px">
+			<b style="color:red">REGLEMENT DE L’ADHESION et DES ACTIVITES A L'ORDRE DE R'EKILIBRE</b>
+		</p>
+		<div>
+			<label for="membershipCheck" style="position: relative;vertical-align: middle;bottom: 1px;">
+				{% if registration.membershipCheck %}
+					<input id="membershipCheck" name="membershipCheck" type="checkbox" value="115" checked/>
+				{% else %}
+					<input id="membershipCheck" name="membershipCheck" type="checkbox" value="115"/>
+				{% endif %}
+				Un chèque d'adhésion de 25€
+			</label>
+            <br>
+			<label for="activitiesSingleCheck" style="position: relative;vertical-align: middle;bottom: 1px;">
+				{% if registration.activitiesSingleCheck %}
+					<input id="activitiesSingleCheck" name="activitiesSingleCheck" type="checkbox" value="115" checked/>
+				{% else %}
+					<input id="activitiesSingleCheck" name="activitiesSingleCheck" type="checkbox" value="115"/>
+				{% endif %}
+				Un chèque du montant de l'activité (200€, 220€, 160€)
+			</label>
+            <br>
+			<label for="activitiesMultiChecks" style="position: relative;vertical-align: middle;bottom: 1px;">
+				{% if registration.activitiesMultiChecks %}
+					<input id="activitiesMultiChecks" name="activitiesMultiChecks" type="checkbox" value="115" checked/>
+				{% else %}
+					<input id="activitiesMultiChecks" name="activitiesMultiChecks" type="checkbox" value="115"/>
+				{% endif %}
+				3 chèques suivants l'activité (70€+70€+60€=200€, 80€+80€+80€=240€,60€+50€+50€=160€)
+			</label>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,21 @@
+{% set thisDate = "now"|date("Y") %}
+<h1 class="text-success">Votre inscription est enregistrée</h1>
+<p class="font-weight-bold">Pour finaliser votre inscription:</p>
+<ul>
+    <li>
+        Télécharger le bulletin d'adhésion
+    </li>
+    <li>
+        Imprimer et signer le bulletin
+    </li>
+    <li>
+        Envoyer le bulletin à FRANCOISE CARBONNIER 4 CHEMIN DU DOMAINE 44240 LA CHAPELLE/ERDRE accompagné du règlement de l’adhésion
+    </li>
+</ul>
+<p class="text-weight-bold">MONTANT DE L’ADHESION : 25 € VALABLE DU 1ER SEPTEMBRE {{thisDate}} AU 31 AOUT {{thisDate + 1}}</p>
+<p class="text-danger">REGLEMENT DE L’ADHESION et DES ACTIVITES A L'ORDRE DE R'EKILIBRE (Possibilité en 3 chèques)</p>
+<p class="text-weight-bold">votre inscription sera validée à la réception du règlement totale de l’adhésion et des activités, accompagné du bulletin d’adhésion</p>
+
+<a href="{{path('app_register_generate_pdf',{'id':idRegistration})}}" class="btn btn-primary">
+    <p class="text-l mb-0"><i class="far fa-file-pdf"></i> Télécharger le bulletin d'inscription</p>
+</a>

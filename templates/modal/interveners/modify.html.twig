@@ -1,0 +1,77 @@
+<div aria-hidden="true" aria-labelledby="modalFormIntervenerLabel" class="modal fade" id="modalFormIntervener{{id}}" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            {{ form_start(formModifyIntervener) }}
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFormIntervenerLabel">Modifier un intervenant</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.email) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.plainPassword) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.firstname) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.surname) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.gender) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.birthdate, {'id': 'add_intervener_birthdate' ~ id, 'attr': {'data-target': '#add_intervener_birthdate' ~ id}}) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.postAddress) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.zipCode) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.phone) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.city) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.roles) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formModifyIntervener.partner) }}
+                    </div>
+                </div>
+                
+                {{ form_row(formModifyIntervener.status) }}
+                {{ form_row(formModifyIntervener.intervenerActivities) }}
+                {{ form_row(formModifyIntervener.picture) }}
+            </div>
+            <div class="modal-footer">
+                {{ form_widget(formModifyIntervener.Valider,{'attr':{'class':'btn btn-success'}}) }}
+                <button class="btn btn-danger" data-dismiss="modal" type="button">Fermer</button>
+            </div>
+            {{ form_end(formModifyIntervener) }}
+        </div>
+    </div>
+</div>

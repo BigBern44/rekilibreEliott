@@ -1,0 +1,188 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }}
+    - Mon espace
+{% endblock %}
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-11 shadow-lg p-3 mb-5 h-100 layout-description">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <h1>Informations personnelles</h1>
+                </div>
+                <div class="col-md-6">
+                    <p>
+                        <b>Prénom:</b>
+                        {{user.firstname}}</p>
+                    <p>
+                        <b>Nom:</b>
+                        {{user.surname}}</p>
+                    <p>
+                        <b>Genre:</b>
+                        {{user.gender}}</p>
+                    <p>
+                        <b>Date de naissance:</b>
+                        {{user.birthdate | date('d/m/Y')}}</p>
+                    <p>
+                        <b>Adresse email:</b>
+                        {{user.email}}</p>
+                    <p>
+                        <b>Adhérent:</b>
+                        {{user.status?'oui':'non'}}</p>
+                </div>
+                <div class="col-md-6">
+                    <p>
+                        <b>Intervenant:</b>
+                        {{user.intervener?'oui':'non'}}</p>
+                    <p>
+                        <b>Association/Entreprise:</b>
+                        {{user.partner}}</p>
+                    <p>
+                        <b>Téléphone:</b>
+                        {{user.phone}}</p>
+                    <p>
+                        <b>Adresse postale:</b>
+                        {{user.fullAddress}}</p>
+                    <p>
+                        <b>Anonyme:</b>
+                        {{user.anonymous?'oui':'non'}}</p>
+                </div>
+            </div>
+            <button class="btn btn-primary" data-target="#modalFormUser" data-toggle="modal" type="button">Modifier mes informations</button>
+            <button class="btn btn-primary" data-target="#modalFormUserPassword" data-toggle="modal" type="button">Modifier mon mot de passe</button>
+            <button class="btn btn-secondary">Exporter mes données</button>
+        </div>
+        {% if user.registrations|length %}
+            <div class="col-md-11 shadow-lg p-3 mb-5 h-100 layout-description">
+                {% for registration in user.registrations %}
+                    {% if registration.dateValidate is null %}
+                        <h5 class="text-danger">Adhésion pour l'année {{registration.dateCreate|date('Y')}}/{{registration.dateCreate|date('Y')+1}} en attente</h5>
+                    {% else %}
+                        <h5 class="text-success">Adhésion pour l'année {{registration.dateCreate|date('Y')}}/{{registration.dateCreate|date('Y')+1}} en acceptée le {{registration.dateValidate|date('d/m/Y')}}</h5>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="col-md-11">
+            <div class="row justify-content-center">
+                <div class="col-md-6 pl-0">
+                    <div class="col-md-12 shadow-lg p-3 mb-5 layout-description">
+                        <h1>Historique des paiements</h1>
+                        {% if user.payments|length > 0 %}
+                            {% for payment in user.payments %}
+                                <p>{{payment.type}}
+                                    le
+                                    {{payment.date|date()}}:
+                                    {{payment.value}}€</p>
+                            {% endfor %}
+                        {% else %}
+                            <p>Auncun paiement effectué</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6 pr-0">
+                    <div class="col-md-12 shadow-lg p-3 mb-5 layout-description">
+                        <h1>Historique des activités</h1>
+                        {% if user.activities|length > 0 %}
+                            {% for activity in user.activities %}
+                                <p>{{activity.displayName}}</p>
+                            {% endfor %}
+                        {% else %}
+                            <p>Auncune inscription</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div aria-hidden="true" aria-labelledby="modalFormUserLabel" class="modal fade" id="modalFormUser" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                {{ form_start(formUser) }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalFormUserLabel">Modifier mes informations personnelles</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ form_row(formUser.email) }}
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(formUser.firstname) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(formUser.surname) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(formUser.gender) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(formUser.birthdate) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(formUser.postAddress) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(formUser.zipCode) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(formUser.city) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(formUser.phone) }}
+                        </div>
+                    </div>
+
+                    <div class="row p-2">
+                        <div class="col">
+                            {{ form_row(formUser.anonymous) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {{ form_widget(formUser.Valider,{'attr':{'class':'btn btn-success'}}) }}
+                    <button class="btn btn-danger" data-dismiss="modal" type="button">Fermer</button>
+                </div>
+                {{ form_end(formUser) }}
+            </div>
+        </div>
+    </div>
+
+    <div aria-hidden="true" aria-labelledby="modalFormUserPasswordLabel" class="modal fade" id="modalFormUserPassword" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                {{ form_start(formUserPassword) }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalFormUserPasswordLabel">Modifier mes informations personnelles</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(formUserPassword.plainPassword) }}
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        {{ form_widget(formUserPassword.Valider,{'attr':{'class':'btn btn-success'}}) }}
+                        <button class="btn btn-danger" data-dismiss="modal" type="button">Fermer</button>
+                    </div>
+                    {{ form_end(formUserPassword) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
